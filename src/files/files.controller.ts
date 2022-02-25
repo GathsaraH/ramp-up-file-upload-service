@@ -7,16 +7,12 @@ import {
   Param,
   Delete,
   UseInterceptors,
-  UploadedFiles,
-  Req,
   UploadedFile,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
-import { CreateFileDto } from './dto/create-file.dto';
 import { extname } from 'path';
 import { UpdateFileDto } from './dto/update-file.dto';
-import { Request } from 'express';
-import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
+import {  FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
@@ -46,27 +42,6 @@ export class FilesController {
   async uploadCsv(@UploadedFile() file) {
     return await this.filesService.create(file);
   }
-
-  // @Post()
-  // @UseInterceptors(FileInterceptor('filename', { dest: './uploads' }))
-  // async upload(@UploadedFile() files: Express.Multer.File) {
-  //   console.log(files);
-  //   const data = fs.createReadStream(files.buffer.toString(), 'utf8');
-  //   if (data) {
-  //     console.log(data);
-  //   }
-  // }
-
-  // @UseInterceptors(AnyFilesInterceptor())
-  // uploadFile(
-  //   @UploadedFiles() files: Express.Multer.File,
-  //   @Body() createFileDto: CreateFileDto,
-  //   @Req() request: Request,
-  // ) {
-  //   console.log(files);
-  //   const data = fs.createReadStream(files[0].buffer.toString(), 'utf8');
-  //   console.log(data.path);
-  // }
 
   @Get()
   findAll() {
